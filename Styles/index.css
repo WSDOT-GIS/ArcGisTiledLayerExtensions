@@ -1,0 +1,62 @@
+﻿body
+{
+    font-family: Trebuchet MS, Arial, Serif
+}
+h1 
+{
+    font-family: Helvetica, 'MS Sans Serif', Arial, Sans-Serif
+}
+label
+{
+    display: block;
+}
+
+table 
+{
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+tbody td, th 
+{
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+td
+{
+    padding: 0 5px;
+    text-align: right;
+    /* font-family: Monospace; */
+}
+
+tr:last-child > td:first-child 
+{
+    font-family: inherit;
+}
+
+tbody > tr:not(:last-child) > td:not(:first-child)
+{
+    font-family: 'Lucidia Console', Monaco, Consolas, Monospace;
+}
+
+tbody > tr:last-child 
+{
+    font-weight: bold;
+    border-top: 2px solid black;
+}
+
+tbody > tr:last-child > td 
+{
+    border: none;
+}
+
+tbody > tr:not(.even) 
+{
+    background-color: white;
+}
+
+.even 
+{
+    background-color: #dfd;
+}

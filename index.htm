@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>ArcGIS Cache Info</title>
+    <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.11/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="Styles/index.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+    <h1>ArcGIS Cache Info</h1>
+    <div>
+        <div id="mapServiceSection">
+            <label for="mapServiceSelect">Enter the URL of a tiled ArcGIS Server map service</label>
+            <input type="url" id="mapServiceSelect" style="width: 600px;" /><button id="selectMapServiceButton">Submit</button>
+        </div>
+    </div>
+
+
+
+    <div id="resultsSection">
+        <dl>
+            <dt>Width</dt>
+            <dd><span id="width">?</span> px</dd>
+            <dt>Height</dt>
+            <dd><span id="height">?</span> px</dd>
+            <dt><abbr title="dots per inch">DPI</abbr></dt>
+            <dd id="dpi">?</dd>
+            <dt>Tiling Origin</dt>
+            <dd id="tilingOrigin"></dd>
+            <dt>Map Units</dt>
+            <dd id="units"></dd>
+            <dt>Full Extent</dt>
+            <dd>
+                <dl id="fullExtent">
+                    <dt>X Min.</dt>
+                    <dd class="xmin"></dd>
+                    <dt>Y Min.</dt>
+                    <dd class="ymin"></dd>
+                    <dt>X Max.</dt>
+                    <dd class="xmax"></dd>
+                    <dt>Y Max.</dt>
+                    <dd class="ymax"></dd>
+                </dl>
+            </dd>
+        </dl>
+
+        <table id="lodTable">
+            <caption>Levels of Detail</caption>
+            <thead>
+                <tr>
+                    <th>Level</th>
+                    <th>Resolution</th>
+                    <th>Scale</th>
+                    <th>Tile Width in <span class="units"></span></th>
+                    <th>Tile Height in <span class="units"></span></th>
+                    <th>First Row</th>
+                    <th>First Col.</th>
+                    <th>Last Row</th>
+                    <th>Last Col.</th>
+                    <th>Total Tiles</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="tileExtent">
+        <h2>Find extent of tile</h2>
+        <label for="lodSelect">LOD</label><select id="lodSelect"></select>
+        <label for="rowInput">Row</label><input type="text" id="rowInput" />
+        <label for="colInput">Column</label><input type="text" id="colInput" />
+        <br />
+        <button type="button" id="findExtentButton">Find Extent</button>
+        <label for="result">Result</label>
+        <textarea id="result" readonly="readonly" ></textarea>
+    </div>
+
+    <div>
+        <h2>Formulas</h2>
+        <h3>ESRI-provided formulas</h3>
+        <p>These formulas came from <a href="http://help.arcgis.com/en/arcgisserver/10.0/apis/soap/index.htm#SOAP_Map_GetMapTile.htm">here</a>.</p>
+        <div class="notMathML">
+        Column = Floor((Point of interest X -Tile origin X) / width of a tile in map units)<br />
+        Row = Floor((Tile origin Y - Point of interest Y) / height of a tile in map units)
+        </div>
+
+        <div class="mathML">
+            <div>
+                <math>
+                    <mi>Column</mi>
+                    <mo>=</mo>
+                    <mo>⌊</mo>
+                    <mfrac>
+                        <mrow>
+                            <mi>Point of interest X</mi>
+                            <mo>-</mo>
+                            <mi>Tile origin X</mi>
+                        </mrow>
+                        <mrow>
+                            <mi>width of tile in map units</mi>
+                        </mrow>
+                    </mfrac>
+                    <mo>⌋</mo>
+                </math>
+            </div>
+            <div>
+                <math>
+                    <mi>Row</mi>
+                    <mo>=</mo>
+                    <mo>⌊</mo>
+                    <mfrac>
+                        <mrow>
+                            <mi>Tile origin Y</mi>
+                            <mo>-</mo>
+                            <mi>Point of interest Y</mi>
+                        </mrow>
+                        <mrow><mi>height of tile in map units</mi></mrow>
+                    </mfrac>
+                    <mo>⌋</mo>
+                </math>
+            </div>
+        </div>
+
+        <h3>Derived formulas</h3>
+        <div>
+            <div>Xmin = column ∙ tile width in map units + tile origin X</div>
+            <div>Ymax = (row ∙ tile height in map units - tile origin Y) / -1</div>
+            <div>Xmax = Xmin + tile width in map units</div>
+            <div>Ymin = Ymax - tile width in map units</div>
+        </div>
+    </div>
+
+    <script src="Scripts/json2.js" type="text/javascript"></script> <!-- Modern browsers don't need the json2.js script. -->
+    <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=2.2compact"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.5.1.min.js" type="text/javascript"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.11/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="Scripts/TiledLayerExtensions.js" type="text/javascript"></script>
+    <script src="Scripts/index.js" type="text/javascript"></script>
+</body>
+</html>
